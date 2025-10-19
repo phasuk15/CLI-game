@@ -5,11 +5,14 @@ print("Welcome to Word Search!")
 
 level = input("Choose your difficulty (easy, medium, hard): ");
 
-animals = ["CAT", "DOG", "LION", "TIGER", "BEAR", "WOLF", "FOX", "DEER", "MOUSE", "HORSE"]
-fruits = ["APPLE", "MANGO", "PEAR", "GRAPE", "KIWI", "LEMON", "BANANA", "ORANGE", "PLUM", "CHERRY"]
-colors = ["RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "ORANGE", "BLACK", "WHITE", "PINK", "BROWN"]
-tech = ["PYTHON", "JAVA", "HTML", "CSS", "NODE", "SQL", "RUBY", "CPLUSPLUS", "JAVASCRIPT", "API"]
-nature = ["SUN", "MOON", "STAR", "SKY", "RAIN", "SNOW", "TREE", "FIRE", "WATER", "ROCK"]
+
+theme = {
+    "animals": ["CAT", "DOG", "LION", "TIGER", "BEAR", "WOLF", "FOX", "DEER", "MOUSE", "HORSE"],
+    "fruits": ["APPLE", "MANGO", "PEAR", "GRAPE", "KIWI", "LEMON", "BANANA", "ORANGE", "PLUM", "CHERRY"],
+    "colours": ["RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "ORANGE", "BLACK", "WHITE", "PINK", "BROWN"],
+    "tech": ["PYTHON", "JAVA", "HTML", "CSS", "NODE", "SQL", "RUBY", "CPLUSPLUS", "JAVASCRIPT", "API"],
+    "nature": ["SUN", "MOON", "STAR", "SKY", "RAIN", "SNOW", "TREE", "FIRE", "WATER", "ROCK"]
+}
 
 direction = ["up", "down", "left", "right"]
 
@@ -59,37 +62,40 @@ def fill_grid(grid):
             if grid[i][j] == "_":
                 grid[i][j] = random.choice(string.ascii_uppercase)
 
-grid = gen_grid(10)
-populate(animals, 10, grid)
-fill_grid(grid)
-
-
 def print_grid(grid):
     for row in grid:
         print(" ".join(row))
 
-
 def play(level):
-    if level == "easy":
-        grid = gen_grid(10)
-        populate(animals, 10, grid)
-        fill_grid(grid)
-        print_grid(grid)
+    level_sizes = {"easy": 10, "medium": 12, "hard": 15}
+    size = level_sizes.get(level, 10)
 
+    # Pick a random theme
+    topic_name = random.choice(list(theme.keys()))
+    bank = theme[topic_name]
 
+    print(f"\nTheme: {topic_name.capitalize()}")
 
+    grid = gen_grid(size)
+    populate(bank,size, grid)
+    fill_grid(grid)
+    print_grid(grid)
 
-    elif level == "medium":
-        grid = gen_grid(12)
-        populate(animals, 10, grid)
-        fill_grid(grid)
-        print_grid(grid)
+    found_words = set()
+    print("\nEnter the words you found one by one. Type 'DONE' when finished.")
 
+    while len(found_words) < len(bank):
+        user_word = input("Word: ").strip().upper()
+        if user_word == "DONE":
+            break
+        elif user_word in bank and user_word not in found_words:
+            found_words.add(user_word)
+            print(f"Correct! {len(found_words)}/{len(bank)} words found.")
+        else:
+            print("Incorrect or already found.")
 
+    print("\nGame Over!")
+    print(f"You found {len(found_words)}/{len(bank)} words.")
+    print("Words to find were:", ", ".join(bank))
 
-    else:
-        grid = gen_grid(15)
-        populate(animals, 10, grid)
-        fill_grid(grid)
-        print_grid(grid)
-
+play(level)
