@@ -1,8 +1,7 @@
 # 🧩 Command-Line Word Search Game
 
 A fun, quick **word search puzzle** you can play entirely in the **command line**!  
-Built in Python, this game randomly generates a grid of letters, hides themed words in it,  
-and challenges you to find them all.
+Built in Python, this game was a mini one-hour hackathon within another 24-hour hackathon!!
 
 ---
 
