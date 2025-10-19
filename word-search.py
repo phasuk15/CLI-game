@@ -1,6 +1,8 @@
 import random
 import string
 
+
+
 print("Welcome to Word Search!")
 
 level = input("Choose your difficulty (easy, medium, hard): ");
@@ -67,6 +69,7 @@ def print_grid(grid):
         print(" ".join(row))
 
 def play(level):
+
     level_sizes = {"easy": 10, "medium": 12, "hard": 15}
     size = level_sizes.get(level, 10)
 
